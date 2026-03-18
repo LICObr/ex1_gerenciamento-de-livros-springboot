@@ -30,5 +30,10 @@ public class LivroController {
         return livroService.save(livro);
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        livroService.delete(id);
+    }
+
 //coment
 }
