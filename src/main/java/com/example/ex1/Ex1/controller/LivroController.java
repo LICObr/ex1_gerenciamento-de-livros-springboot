@@ -4,6 +4,7 @@ import com.example.ex1.Ex1.entity.Livro;
 import com.example.ex1.Ex1.repository.LivroRepository;
 import com.example.ex1.Ex1.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +22,11 @@ public class LivroController {
     }
 
     @GetMapping
-    public List<Livro> getALl(){
-        return livroService.getALL();
+    public ResponseEntity<List<Livro>> findAll(){
+        List<Livro> resquest = livroService.findAll();
+        return ResponseEntity.ok().body(resquest);
     }
+
 
     @PostMapping
     public Livro save(@RequestBody Livro livro){
