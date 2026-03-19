@@ -5,6 +5,7 @@ import com.example.ex1.Ex1.repository.LivroRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LivroService {
@@ -28,6 +29,17 @@ public class LivroService {
     //deletar
     public void delete(Long id){
         livroRepository.deleteById(id);
+    }
+
+    //buscar por id
+    public Optional<Livro> buscar(Long id){
+        return livroRepository.findById(id);
+    }
+
+    //atualizar
+    public Livro update(Long id, Livro livro){
+        livro.setId(id);
+        return livroRepository.save(livro);
     }
 
 }

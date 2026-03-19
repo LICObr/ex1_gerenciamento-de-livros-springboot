@@ -6,11 +6,14 @@ import com.example.ex1.Ex1.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController //Identifica que eh um Controller
-@RequestMapping //mapear as rotas
+@RequestMapping("/livros") //mapear as rotas
 public class LivroController {
 
     //injecao de dependencia
@@ -29,13 +32,30 @@ public class LivroController {
 
 
     @PostMapping
-    public Livro save(@RequestBody Livro livro){
-        return livroService.save(livro);
+    public ResponseEntity<Livro> save(@RequestBody Livro livro){
+        Livro save = livroService.save(livro);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                .path("/{id}").buildAndExpand(livro.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(save);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         livroService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Livro> findById(@PathVariable Long id){
+        return livroService.buscar(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Livro> update(@PathVariable Long id, @RequestBody Livro livro){
+        return ResponseEntity.ok(livroService.update(id, livro));
     }
 
 //coment
