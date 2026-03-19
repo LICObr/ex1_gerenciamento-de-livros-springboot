@@ -20,6 +20,7 @@ public class LivroService {
     public List<Livro> getALL(){
         return livroRepository.findAll();
     }
+
     //criar
     public Livro save(Livro livro){
         return livroRepository.save(livro);
