@@ -35,8 +35,7 @@ public class LivroController {
     public ResponseEntity<Livro> save(@RequestBody Livro livro){
         Livro save = livroService.save(livro);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
-                .path("/{id}").buildAndExpand(livro.getId())
-                .toUri();
+                .path("/{id}").buildAndExpand(livro.getId()).toUri();
         return ResponseEntity.created(uri).body(save);
     }
 
@@ -58,5 +57,4 @@ public class LivroController {
         return ResponseEntity.ok(livroService.update(id, livro));
     }
 
-//coment
 }
